@@ -1,0 +1,24 @@
+#include <bits/stdc++.h>
+
+pair<int,int> missingAndRepeating(vector<int> &arr, int n)
+{
+	// Write your code here 
+	long long N=arr.size();
+	long long sumN=N*(N+1)/2;
+	long long sumN2=(N*(N+1)*(2*N+1))/6;
+	long long sumElm=0;
+	long long sumElm2=0;
+	for(int i=0;i<n;i++){
+        sumElm+=arr[i];
+		sumElm2+=((long long)arr[i]*(long long)arr[i]);
+	}
+	
+	long long val1=sumElm-sumN;
+	long long val2=sumElm2-sumN2;
+	val2=val2/val1;
+
+	long long x=(val1+val2)/2;
+	long long y=x-val1;
+
+	return{(int)y,(int)x};
+}
