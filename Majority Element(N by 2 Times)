@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+
+int findMajorityElement(int arr[], int n) {
+	// Write your code here.
+	int elm;
+	int cnt1=0;
+	for(int i=0;i<n;i++){
+      if(cnt1==0){
+		  cnt1=1;
+		  elm=arr[i];
+	  }
+
+	  else if(arr[i]==elm){
+		  cnt1++;
+	  }
+	  else{
+		  cnt1--;
+	  }
+	}
+    
+	//Check given element is really occuring how much times
+	int cnt2=0;
+	for(int i=0;i<n;i++){
+		if(arr[i]==elm){
+			cnt2++;
+		}
+	}
+
+	if(cnt2>n/2){
+		return elm;
+	}
+	else{
+		return -1;
+	}
+}
