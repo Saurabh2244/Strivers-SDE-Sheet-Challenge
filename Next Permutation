@@ -1,0 +1,10 @@
+#include <bits/stdc++.h> 
+vector<int> nextPermutation(vector<int> &permutation, int n)
+{
+    //  Write your code here.
+
+    //Take benefit of STL in built Functions
+    next_permutation(permutation.begin(),permutation.end());
+
+    return permutation;
+}
