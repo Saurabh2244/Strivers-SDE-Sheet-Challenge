@@ -1,0 +1,32 @@
+#include <bits/stdc++.h> 
+
+void permu(string &s,string &output,int mpp[],vector<string> &ans){
+    if(output.length()==s.length()){
+        ans.push_back(output);
+        return;
+    }
+    for(int i=0;i<s.length();i++){
+        if(!mpp[i]){
+            output.push_back(s[i]);
+            mpp[i]=1;
+            permu(s,output,mpp,ans);
+            mpp[i]=0;
+            output.pop_back();
+        }
+    }
+}
+
+vector<string> findPermutations(string &s) {
+    // Write your code here.
+    vector<string> ans;
+    string output;
+    
+    int mpp[s.length()];
+    for(int i=0;i<s.length();i++){
+        mpp[i]=0;
+    }
+
+    permu(s,output,mpp,ans);
+    return ans;
+
+}
