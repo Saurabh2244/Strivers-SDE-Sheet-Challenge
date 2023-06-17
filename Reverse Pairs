@@ -1,0 +1,59 @@
+class Solution {
+  public:
+    int ans = 0;
+    void merge(vector<int>& arr, int left, int mid, int right) {
+        int p1 = left;
+        int p2 = mid + 1;
+        vector<int> res;
+        while (p1 <= mid && p2 <= right) {
+            if (arr[p1] <= 2 * arr[p2]) {
+                p1 += 1;
+
+            } else {
+                ans += (mid - p1 + 1);
+                p2 += 1;
+            }
+        }
+        p1 = left, p2 = mid + 1;
+        while (p1 <= mid && p2 <= right) {
+            if (arr[p1] <= arr[p2]) {
+                res.push_back(arr[p1]);
+                p1 += 1;
+
+            } else {
+                res.push_back(arr[p2]);
+                p2 += 1;
+            }
+        }
+
+        while (p1 <= mid) {
+            res.push_back(arr[p1]);
+            p1 += 1;
+        }
+        while (p2 <= right) {
+            res.push_back(arr[p2]);
+            p2 += 1;
+        }
+
+        for (int i = left; i <= right; i++) {
+            arr[i] = res[i - left];
+        }
+    }
+
+    void mergeSort(vector<int>& arr, int left, int right) {
+        if (left == right) {
+            return;
+        }
+        int mid = (left + right) / 2;
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+
+        merge(arr, left, mid, right);
+    }
+
+    int countRevPairs(int n, vector<int> arr) {
+        ans = 0;
+        mergeSort(arr, 0, n - 1);
+        return ans;
+    }
+};
