@@ -1,0 +1,46 @@
+#include <bits/stdc++.h> 
+
+long long int smallerElem(vector<vector<int> > &arr,int mid){
+		long long int cnt=0;
+	for(int i=0;i<arr.size();i++){
+		long long int start=0;
+		long long int end=arr[i].size()-1;
+		long long int mid1=start+(end-start)/2;
+	
+
+		while(start<=end){
+			if(arr[i][mid1]<=mid){
+				start=mid1+1;
+			}
+			else{
+				end=mid1-1;
+
+			}
+			mid1=start+(end-start)/2;
+		}
+		cnt+=start;
+	}
+	return cnt;
+}
+
+int findMedian(vector<vector<int> > &arr, int n, int m){
+	
+	// Write your code here 
+	long long int start=-100000000;
+	long long int end=100000000;
+	long long int mid=start+(end-start)/2;
+	long long int total=n*m;
+
+	while(start<=end){
+		long long int lessElements=smallerElem(arr,mid);
+		if(lessElements>total/2){
+			end=mid-1;
+		}
+		else{
+		 start=mid+1;
+		}
+		 mid=start+(end-start)/2;
+	}
+	return start;
+	
+}
