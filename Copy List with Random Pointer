@@ -1,0 +1,86 @@
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* next;
+    Node* random;
+    
+    Node(int _val) {
+        val = _val;
+        next = NULL;
+        random = NULL;
+    }
+};
+*/
+
+class Solution {
+public:
+void insertAtTail(Node*&head,Node*&tail,int value){
+    Node*newNode=new Node(value);
+    if(head==NULL){
+        head=newNode;
+        tail=newNode;
+        return;
+            
+    }
+    else{
+        tail->next=newNode;
+        tail=newNode;
+    }
+}
+
+public:
+    Node* copyRandomList(Node* head) {
+        Node*cloneHead=NULL;
+        Node*cloneTail=NULL;
+        
+        Node*temp=head;
+        while(temp!=NULL){
+            insertAtTail(cloneHead,cloneTail,temp->val);
+            temp=temp->next;
+        }
+        
+        //step2
+        Node*originalNode=head;
+        Node*cloneNode=cloneHead;
+        while(originalNode!=NULL && cloneNode!=NULL){
+            Node*next=originalNode->next;
+            originalNode->next=cloneNode;
+            originalNode=next;
+            
+            next=cloneNode->next;
+            cloneNode->next=originalNode;
+            cloneNode=next;
+            
+        }
+        
+        //step 3:adjust random
+        temp=head;
+        while(temp!=NULL){
+            if(temp->next!=NULL){
+               temp->next->random=temp->random? temp->random->next:temp->random;
+            }
+            temp=temp->next->next;
+          
+        }
+        
+        //step 4:remove step2
+        originalNode=head;
+        cloneNode=cloneHead;
+        while(originalNode!=NULL && cloneNode!=NULL){
+          originalNode->next=cloneNode->next;
+          originalNode=originalNode->next;
+          
+          if(originalNode!=NULL){
+            cloneNode->next=originalNode->next;  
+          }
+        
+          cloneNode=cloneNode->next;
+            
+        }
+        
+        //step5: return ans
+        return cloneHead;
+    }
+};
