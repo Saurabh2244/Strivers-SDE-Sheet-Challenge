@@ -1,0 +1,84 @@
+#include<bits/stdc++.h>
+class LRUCache
+{
+public:
+ 
+    class Node{
+        public:
+        int key;
+        int value;
+        Node*next;
+        Node*prev;
+
+        Node(int key, int value){
+            this->key=key;
+            this->value=value;
+        }
+    };
+
+    int Capacity;
+    unordered_map<int,Node*> mpp;
+    Node*head=new Node(0,0);
+    Node*tail=new Node(0,0);
+   
+    LRUCache(int capacity)
+    {
+        // Write your code here
+        Capacity=capacity;
+        head->next=tail;
+        tail->prev=head;
+    }
+     
+    //add node
+    void insertNode(Node *nodeAdd){
+        Node*temp=head->next;
+        nodeAdd->next=temp;
+        temp->prev=nodeAdd;
+        head->next=nodeAdd;
+        nodeAdd->prev=head;
+       
+    }
+
+    //delete node
+    void deleteNode(Node *Nodedelete){
+        Node *nextNode=Nodedelete->next;
+        Node *prevNode=Nodedelete->prev;
+
+        prevNode->next=nextNode;
+        nextNode->prev=prevNode;
+    }
+    int get(int key)
+    {
+        // Write your code here
+        if(mpp.find(key)!=mpp.end()){
+           Node* tem=mpp[key];
+           int ans=tem->value;
+           //mpp.clear(key);
+           deleteNode(tem);
+           insertNode(tem);
+           mpp[key]=head->next;
+           return ans;
+
+        }
+        return -1;
+    }
+
+    void put(int key, int value)
+    {
+        // Write your code here
+        if(mpp.find(key)!=mpp.end()){
+            Node* curr=mpp[key];
+            mpp.erase(key);
+            deleteNode(curr);
+        }
+
+        if(mpp.size()==Capacity){
+            Node*last=tail->prev;
+            mpp.erase(last->key);
+            deleteNode(last);
+        }
+
+        insertNode(new Node(key,value));
+        mpp[key]=head->next;
+    }
+};
