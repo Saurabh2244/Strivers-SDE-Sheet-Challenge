@@ -1,0 +1,49 @@
+class Queue {
+
+	int front, rear;
+	int *arr;
+	int size;
+
+
+public:
+	Queue()
+	{
+		front = 0;
+		rear = 0;
+		this->size=100001;
+		arr=new int[size];
+		
+	}
+
+	// Enqueue (add) element 'e' at the end of the queue.
+	void enqueue(int e)
+	{
+		// Write your code here.
+		if(rear==size){
+			return;
+		}
+
+		else{
+			arr[rear]=e;
+			rear++;
+		}
+	}
+
+	// Dequeue (retrieve) the element from the front of the queue.
+	int dequeue()
+	{
+		// Write your code here.
+		if(front==rear){
+			return -1;
+		}
+		else{
+        int ans=arr[front];
+		arr[front]=-1;
+
+		front++;
+
+		return ans;
+		}
+		
+	}
+};
